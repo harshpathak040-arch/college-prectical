@@ -1,1 +1,57 @@
+#include <stdio.h>
+
+struct Process {
+    int pid; // Process ID
+    int burst; // Burst time of the process
+    int priority; // Priority of the process
+    int waiting;
+    int turnaround; // Remaining time for the process
+};
+
+int main() {
+    int n;
+    printf("Enter the number of processes: ");
+    scanf("%d", &n);
+
+    struct Process processes[n];
+    scanf("%d" , &n);
+
+    struct Process p[n];
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter process ID, burst time, and arrival time for process %d: ", i + 1);
+        scanf("%d %d", &p[i].burst, &p[i].priority);
+
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = i+1; j < n; j++) {
+            if (p[j].priority > p[i].priority) {
+                struct Process temp = p[i];
+                p[i] = p[j];
+                p[j] = temp;
+            }
+        }
+    }
+
+    p[0].waiting = 0;
+
+    for (int i = 1; i < n; i++) {
+        p[i].waiting = p[i - 1].waiting + p[i - 1].burst;
+    }
+    for (int i = 0; i < n; i++) {
+        p[i].turnaround = p[i].waiting + p[i].burst;
+    }
+    printf
+    ("\nprocess\tBurst\tWaiting\tTurnaround\n");
+    for (int i = 0; i < n; i++) {
+        printf("P%d\t%d\t%d\t\t%d\n",
+               p[i].pid, p[i].burst, p[i].priority,
+                p[i].waiting, p[i].turnaround);
+
+}
+return 0;
+}
+
+
+
 
